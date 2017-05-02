@@ -42,7 +42,7 @@ RUN requirements="mysql-client ca-certificates curl cron openssl git libpng12-de
     && rm -rf /var/lib/apt/lists/*
 RUN sed -i 's/;listen.mode = 0660/listen.mode = 0660/g' /etc/php/7.0/fpm/pool.d/www.conf && sed -i 's/memory_limit = 128M/memory_limit = 2048M/g' /etc/php/7.0/fpm/php.ini 
 COPY default.conf /etc/nginx/conf.d/default.conf
-RUN mkdir -p /var/www/html && chmod -R 755 /var/www/html/ && chown -R www-data:www-data /var/www/html && usermod -aG www-data nginx 
+RUN mkdir -p /var/www/html && chmod -R 755 /var/www/html/ && chown -R www-data:www-data /var/www/html && usermod -aG www-data nginx
 WORKDIR /var/www/html
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 EXPOSE 80
