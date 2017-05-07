@@ -75,6 +75,8 @@ RUN cd /var/www/html/magento2 && composer install -v && bin/magento setup:instal
                                                         --timezone=$TIMEZONE  \ 
                                                         --use-rewrites=1 
 RUN  sed -i "s/set \$MAGE_MODE.*/set \$MAGE_MODE default;/g" /etc/nginx/sites-available/default && cd /var/www/html/magento2 && bin/magento deploy:mode:set $MAGENTO_MODE 
+COPY magento.cron /tmp/magento.cron
+RUN crontab -u www-data /tmp/magento.cron && rm -f /tmp/magento.cron
 #ADD magento2 /var/www/html/magento2
 RUN cd /var/www/html/magento2 && chown -R www-data:www-data . && find . -type d -exec chmod 770 {} \; && find . -type f -exec chmod 660 {} \; && chmod u+x bin/magento
 #RUN cd /var/www/html/magento2 && chown -R www-data:www-data . && chmod -R 777 . && chmod u+x bin/magento
