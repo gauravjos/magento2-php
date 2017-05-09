@@ -25,7 +25,7 @@ sed -i "s/magento_servername/$HOSTNAME/g" /etc/nginx/sites-available/default
 
 /usr/sbin/nginx -t
 
-if [ $? -eq 0 ] && [ -f /etc/bucketaccess.json ];
+if [ $? -eq 0 ] && [ -f "$GOOGLE_APPLICATION_CREDENTIALS" ];
 then
 	/usr/bin/gcsfuse --uid $(id -u www-data) --gid $(id -g www-data) --dir-mode="777" --file-mode="777" -o allow_other -o nonempty $MEDIABUCKET $MAGENTO_HOME/pub/media
 	/etc/init.d/php7.0-fpm start && nginx -g 'daemon off;'
